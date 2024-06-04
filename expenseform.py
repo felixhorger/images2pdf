@@ -24,7 +24,7 @@ for f in os.listdir(path):
 		for f in os.listdir(directory):
 			f = os.path.join(directory, f)
 			ext = os.path.splitext(f)[1].lower()
-			if ext in (".jpg", ".png"): filepaths_images.append(f)
+			if ext in (".jpg", ".jpeg", ".png"): filepaths_images.append(f)
 			elif ext == ".pdf": filepaths_pdfs.append(f)
 			else: print("Warning: unexpected file extension \"", f, "\"")
 		#
