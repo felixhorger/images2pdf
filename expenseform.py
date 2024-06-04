@@ -30,16 +30,26 @@ for f in os.listdir(path):
 		#
 	#
 #
-if len(filepath_expenseform) == 0: raise Exception("Expense form not found")
-if len(filepaths_images) == 0 and len(filepaths_pdfs) == 0: raise Exception("No receipts found in folder")
 
-# Convert image-format receipts to pdf
-path_converted_receipts = os.path.join(path, "tmp_converted_receipts.pdf")
-images2pdf(filepaths_images, path_converted_receipts)
+if len(filepath_expenseform) == 0: raise Exception("Expense form not found")
+
+pdfs = [filepath_expenseform]
+if len(filepaths_images) > 0:
+	# Convert image-format receipts to pdf
+	path_converted_receipts = os.path.join(path, "tmp_converted_receipts.pdf")
+	images2pdf(filepaths_images, path_converted_receipts)
+	pdfs += [path_converted_receipts]
+#
+if len(filepaths_pdfs) > 0:
+	pdfs += filepaths_pdfs
+#
+if len(pdfs) == 1:
+	raise Exception("No receipts found in folder")
+#
+
 
 # Merge all involved pdfs
 merger = PdfWriter()
-pdfs = [filepath_expenseform] + filepaths_pdfs + [path_converted_receipts]
 for pdf in pdfs: merger.append(pdf)
 merger.write(os.path.splitext(filepath_expenseform)[0] + "_merged.pdf")
 merger.close()
