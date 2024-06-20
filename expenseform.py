@@ -16,7 +16,8 @@ filepath_expenseform = ""
 for f in os.listdir(path):
 	f = os.path.join(path, f)
 	if os.path.isfile(f):
-		if len(filepath_expenseform) or os.path.splitext(f)[1].lower() != ".pdf": raise Exception("Expected a single pdf file on the top level of the provided directory (the expense form)")
+		if os.path.splitext(f)[1].lower() != ".pdf": continue
+		if len(filepath_expenseform): raise Exception("Expected a single pdf file (and potentially other non-pdf files) on the top level of the provided directory (the expense form)")
 		filepath_expenseform = f
 	#
 	else:
